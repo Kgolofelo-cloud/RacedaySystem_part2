@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 
-
 namespace RacedayAPI.Requests
 {
     public class RegisterRequest
