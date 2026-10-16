@@ -16,7 +16,7 @@ The RaceDay API is built with ASP.NET Core Web API (.NET 10) and Entity Framewor
  
 ## CI/CD Pipeline Status
 *(Screenshot of the successful GitHub Actions build will be below)*
-![CI/CD Success](docs/CD CI Pipeline.png)
+![CI/CD Success](docs/CD_CI_Pipeline.png)
  
 ## Video Presentation
 [Link here]
