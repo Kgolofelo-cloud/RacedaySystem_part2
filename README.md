@@ -19,4 +19,4 @@ The RaceDay API is built with ASP.NET Core Web API (.NET 10) and Entity Framewor
 ![CI/CD Success](docs/CD_CI_Pipeline.png)
  
 ## Video Presentation
-[Link here]
+[https://youtu.be/UsBNvM0fJ8Q?si=Zj-SR57Qw_mVet3R]
