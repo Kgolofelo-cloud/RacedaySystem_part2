@@ -2,7 +2,7 @@
 
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RaceDayAPI.Models
+namespace RacedayAPI.Models
 
 {
 
@@ -25,8 +25,6 @@ namespace RaceDayAPI.Models
         [Required]
 
         public int OverallPosition { get; set; }
-
-        // Navigation Property
 
         [ForeignKey("RegistrationID")]
 

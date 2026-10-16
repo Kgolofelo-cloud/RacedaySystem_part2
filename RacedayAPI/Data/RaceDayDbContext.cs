@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-using RaceDayAPI.Models;
+using RacedayAPI.Models;
+using RacedayAPI.Models;
 
-namespace RaceDayAPI.Data
+namespace RacedayAPI.Data
 
 {
 
@@ -30,11 +31,7 @@ namespace RaceDayAPI.Data
 
             base.OnModelCreating(modelBuilder);
 
-            // 1. Unique Constraints
-
             modelBuilder.Entity<AppUser>().HasIndex(u => u.Email).IsUnique();
-
-            // 2. Default Values (From Part 1 SQL)
 
             modelBuilder.Entity<RaceCategory>()
 
@@ -48,8 +45,6 @@ namespace RaceDayAPI.Data
 
                 .HasDefaultValueSql("GETDATE()");
 
-            // 3. One-to-One Relationship
-
             modelBuilder.Entity<Registration>()
 
                 .HasOne(r => r.RaceResult)
@@ -57,8 +52,6 @@ namespace RaceDayAPI.Data
                 .WithOne(rr => rr.Registration)
 
                 .HasForeignKey<RaceResult>(rr => rr.RegistrationID);
-
-            // 4. Foreign Keys & Cascade Deletes
 
             modelBuilder.Entity<RaceCategory>()
 
@@ -68,9 +61,7 @@ namespace RaceDayAPI.Data
 
                 .HasForeignKey(c => c.EventID)
 
-                .OnDelete(DeleteBehavior.Cascade); // Specified in SQL script
-
-            // Prevent multiple cascade paths for the rest
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Event>()
 

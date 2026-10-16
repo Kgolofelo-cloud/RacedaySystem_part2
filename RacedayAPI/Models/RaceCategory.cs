@@ -1,7 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using RacedayAPI.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RaceDayAPI.Models
+namespace RacedayAPI.Models
 {
     public class RaceCategory
     {
@@ -22,7 +23,6 @@ namespace RaceDayAPI.Models
         [Column(TypeName = "decimal(10,2)")]
         public decimal EntryFee { get; set; } = 0.00m;
 
-        // Navigation Properties
         [ForeignKey("EventID")]
         public Event? Event { get; set; }
 

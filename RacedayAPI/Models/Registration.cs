@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using RacedayAPI.Models;
+using System.ComponentModel.DataAnnotations;
 
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RaceDayAPI.Models
+namespace RacedayAPI.Models
 
 {
 
@@ -23,8 +24,6 @@ namespace RaceDayAPI.Models
         public int CategoryID { get; set; }
 
         public DateTime RegisteredAt { get; set; } = DateTime.Now;
-
-        // Navigation Properties
 
         [ForeignKey("UserID")]
 

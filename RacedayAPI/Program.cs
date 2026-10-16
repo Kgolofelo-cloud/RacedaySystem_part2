@@ -8,10 +8,6 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
 
-// Add Database Context
-builder.Services.AddDbContext<RaceDayAPI.Data.RaceDayDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
 // 1. Add Session Services
 
 builder.Services.AddDistributedMemoryCache();
@@ -27,6 +23,12 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 
 });
+
+// Add Database Context with corrected namespace
+
+builder.Services.AddDbContext<RacedayAPI.Data.RaceDayDbContext>(options =>
+
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
