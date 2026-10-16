@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="dotnet-ci.yml" />
+  </Folder>
   <Project Path="RacedayAPI.Test/RacedayAPI.Test.csproj" Id="d74121da-b9c7-46bc-8d7c-3a79433bbe01" />
   <Project Path="RacedayAPI/RacedayAPI.csproj" />
 </Solution>
