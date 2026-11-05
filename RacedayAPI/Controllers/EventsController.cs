@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using RacedayAPI.Data;
 using RacedayAPI.Models;
 using RacedayAPI.Requests;
+using Azure.Storage.Blobs;
 
 namespace RacedayAPI.Controllers
 {
@@ -93,5 +94,49 @@ namespace RacedayAPI.Controllers
 
             return StatusCode(201, new { Message = "Category added." });
         }
+
+        // POST: api/v1/events/{id}/banner
+        [HttpPost("{id}/banner")]
+        public async Task<IActionResult> UploadEventBanner(int id, IFormFile file)
+        {
+            var role = HttpContext.Session.GetString("Role");
+            if (role != "Organiser")
+                return StatusCode(403, new { Message = "Forbidden: Not an organiser." });
+
+            var raceEvent = await _context.Events.FindAsync(id);
+            if (raceEvent == null)
+                return NotFound(new { Message = "Event not found." });
+
+            // Only the organiser who created the event can upload a banner
+            var organiserId = HttpContext.Session.GetInt32("UserId").Value;
+            if (raceEvent.OrganiserID != organiserId)
+                return StatusCode(403, new { Message = "Forbidden: You do not manage this event." });
+
+            if (file == null || file.Length == 0)
+                return BadRequest(new { Message = "No file uploaded." });
+
+            // Connect to Azure Blob Storage (Using local Azurite emulator for development)
+            string connectionString = "UseDevelopmentStorage=true";
+            var blobServiceClient = new BlobServiceClient(connectionString);
+            // Create a container named "event-banners" if it doesn't exist
+            var containerClient = blobServiceClient.GetBlobContainerClient("event-banners");
+            await containerClient.CreateIfNotExistsAsync(Azure.Storage.Blobs.Models.PublicAccessType.Blob);
+
+            // Generate a unique filename and upload
+            string uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+            var blobClient = containerClient.GetBlobClient(uniqueFileName);
+            using (var stream = file.OpenReadStream())
+            {
+                await blobClient.UploadAsync(stream, true);
+            }
+
+            // Save the Azure URL to the database
+            raceEvent.BannerUrl = blobClient.Uri.ToString();
+            await _context.SaveChangesAsync();
+
+            return Ok(new { Message = "Banner uploaded successfully.", BannerUrl = raceEvent.BannerUrl });
+        }
+
     }
+
 }

@@ -25,6 +25,8 @@ namespace RacedayAPI.Models
 
         [Required]
 
+        public string? BannerUrl { get; set; }
+
         public int OrganiserID { get; set; }
 
         [Required]
